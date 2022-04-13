@@ -1,0 +1,887 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Kaudio API",
+		"_postman_id": "0d99309e-60d4-d395-95fb-122eeedced97",
+		"description": "Kaudio API\n\nhttps://github.com/BafS/Kaudio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Album",
+			"description": "",
+			"item": [
+				{
+					"name": "Index albums",
+					"request": {
+						"url": "{{host}}:{{port}}/albums",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find albums (by title)",
+					"request": {
+						"url": "{{host}}:{{port}}/albums?title[$search]=The",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create album",
+					"request": {
+						"url": "{{host}}:{{port}}/albums",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Guitar On The Go\",\n\t\"year\": 1963\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Artist",
+			"description": "",
+			"item": [
+				{
+					"name": "Index artists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/artists",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find artists (by year)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/artists?year[$gt]=2000",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": "Find artist by year, greater than 2000"
+					},
+					"response": []
+				},
+				{
+					"name": "Find artists (by name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/artists?name[$search]=Bono",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"description": "",
+			"item": [
+				{
+					"name": "Auth (local)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Has a valid token\"] = jsonData.token.length > 50;",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/auth/local",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"super@admin.com\",\n\t\"password\":\"adminPwd\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Auth (local) test2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Has a valid token\"] = jsonData.token.length > 50;",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/auth/local",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"alice@user.com\",\n\t\"password\":\"alicePwd\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Auth token",
+					"request": {
+						"url": "{{host}}:{{port}}/auth/token",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"default\": \"{\\\"email\\\":\\\"test@test.com\\\",\\\"password\\\":\\\"test\\\"}\"\n}"
+						},
+						"description": "Get authentication token"
+					},
+					"response": []
+				},
+				{
+					"name": "Auth (local) copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Has a valid token\"] = jsonData.token.length > 50;",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/auth/local",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"test@test.com\",\n\t\"password\":\"test\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Newsfeed",
+			"description": "",
+			"item": [
+				{
+					"name": "Message",
+					"request": {
+						"url": "{{host}}:{{port}}/messages",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"message\":\"test\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Playlist",
+			"description": "",
+			"item": [
+				{
+					"name": "Index playlists",
+					"request": {
+						"url": "{{host}}:{{port}}/playlists",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get playlist",
+					"request": {
+						"url": "{{host}}:{{port}}/playlists/582861cc32641c56414dfd80",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create playlist 1",
+					"request": {
+						"url": "{{host}}:{{port}}/playlists",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"My first playlist\",\n\t\"public\": true,\n\t\"tracks_ref\": [\n\t\t\"58267db33dccb5681e6ddfe3\"\n\t]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Track",
+			"description": "",
+			"item": [
+				{
+					"name": "Index tracks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/tracks",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Read track",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/tracks/582a1de4d9638008daa8d980",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": "Read a track by id"
+					},
+					"response": []
+				},
+				{
+					"name": "Find track",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var tracks = jsonData.data",
+									"",
+									"if (tracks[0]) {",
+									"    postman.setGlobalVariable(\"track_1\", tracks[0]._id);",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}:{{port}}/tracks?title[$search]=Ba",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create track 1",
+					"request": {
+						"url": "{{host}}:{{port}}/tracks",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Way You Look Tonight (alt take)\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create track 2",
+					"request": {
+						"url": "{{host}}:{{port}}/tracks",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Dreamsville\"\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "Index users",
+					"request": {
+						"url": "{{host}}:{{port}}/users",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"url": "{{host}}:{{port}}/users/57f757ba49983b5c86592bf8",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find",
+					"request": {
+						"url": "{{host}}:{{port}}/users?email=alice@user.com",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find, regex",
+					"request": {
+						"url": "{{host}}:{{port}}/users?email[$search]=alice",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"url": "{{host}}:{{port}}/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\":\"test@test.com\",\n  \"password\":\"test\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user (change email)",
+					"request": {
+						"url": "{{host}}:{{port}}/users/57f757ba49983b5c86592bf8",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test_patch@test.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user (add friend)",
+					"request": {
+						"url": "{{host}}:{{port}}/users/57fd501ecb118475e99193f9",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"default\": \"{\\\"friends\\\":\\\"57fd4ccaaf1437748c268a32\\\"}\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user (add friend) test2 add test1",
+					"request": {
+						"url": "{{host}}:{{port}}/users/57fd4ccaaf1437748c268a32",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"default\": \"{\\\"friends\\\":\\\"57fd501ecb118475e99193f9\\\"}\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create user 2",
+					"request": {
+						"url": "{{host}}:{{port}}/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"default\": \"{\\\"email\\\":\\\"super@admin.com\\\",\\\"password\\\":\\\"admin\\\"}\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"url": "{{host}}:{{port}}/users",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"default\": \"{\\\"email\\\":\\\"test@test.com\\\",\\\"password\\\":\\\"test_new\\\"}\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search all",
+			"request": {
+				"url": "{{host}}:{{port}}/search/freebird",
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
