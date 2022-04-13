@@ -1,0 +1,20 @@
+{
+  "host": "Kaudio-app.feathersjs.com",
+  "port": 80,
+  "mongodb": "DATABASE_URL",
+  "public": "../public/",
+  "auth": {
+    "token": {
+      "secret": "FEATHERS_AUTH_SECRET"
+    },
+    "local": {},
+    "facebook": {
+      "clientID": "1905242289706539",
+      "clientSecret": "9f4d44c3cd3c413ba54b66d1b8656727",
+      "permissions": {
+        "scope": ["public_profile", "email"]
+      }
+    }
+  },
+  "audioExtensions": ["mp3", "ogg", "wav"]
+}
