@@ -1,0 +1,40 @@
+<div *ngIf="!playlist">
+  <h1 class="text-muted playlist-title">Please select a playlist</h1>
+</div>
+
+<div *ngIf="playlist">
+  <h1 class="playlist-title">{{playlist.name}}</h1>
+  <h2 class="playlist-description">{{playlist.description}}</h2>
+
+  <ngx-datatable
+    *ngIf="playlist.tracks"
+    class="material"
+    [rows]="playlist.tracks"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [headerHeight]="42"
+    [footerHeight]="35"
+    [rowHeight]="38"
+    (sort)="onSort($event)"
+    [selected]="selected"
+    [selectionType]="'single'"
+    (activate)="onActivate($event)"
+    [limit]="20"
+  ></ngx-datatable>
+
+  <div *ngIf="selected && selected.length" class="btn-group btn-group-sm float-left ml-1 mt-1" role="group" aria-label="Playlist edition">
+    <span class="mt-2 mr-2">For selected songs: </span>
+    <button class="btn btn-secondary" (click)="deleteSelectedSong()">
+      <md-icon>delete</md-icon>
+    </button>
+  </div>
+
+  <div class="btn-group btn-group-sm float-right mr-1 mt-1" role="group" aria-label="Playlist edition">
+    <button class="btn btn-secondary" (click)="updatePlaylist()">
+      <md-icon>edit</md-icon>
+    </button>
+    <button class="btn btn-secondary" (click)="deletePlaylist()">
+      <md-icon>delete</md-icon>
+    </button>
+  </div>
+</div>

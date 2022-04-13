@@ -1,0 +1,27 @@
+<div *ngIf="(tracks | async)?.length > 0 && !close" class="card search-results">
+  <table style="width: 100%" class="table table-sm" [hidden]="hideTable">
+    <thead class="thead-default">
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Album</th>
+        <th>
+          Artist
+          <button type="button" (click)="onClose()" class="close mr-2" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tr *ngFor="let track of tracks | async">
+      <td>
+        <button (click)="addTrack(track)" class="btn btn-sm btn-primary">
+              +
+            </button>
+      </td>
+      <td>{{track.title}}</td>
+      <td>{{track.album.title}}</td>
+      <td>{{track.album.artist.name}}</td>
+    </tr>
+  </table>
+</div>

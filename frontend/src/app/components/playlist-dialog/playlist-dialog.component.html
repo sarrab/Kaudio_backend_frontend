@@ -1,0 +1,33 @@
+<md-card-content class="playlist-dialog">
+  <h1 md-dialog-title *ngIf="new" color="primary">Add Playlist</h1>
+  <h1 md-dialog-title *ngIf="!new" color="primary">Edit "{{title}}"</h1>
+
+  <md-dialog-content>
+    <md-input placeholder="Name" style="width: 100%" [(ngModel)]="title"></md-input>
+    <md-input placeholder="Description" style="width: 100%" [(ngModel)]="description"></md-input>
+    <md-slide-toggle [(ngModel)]="public">
+      Public
+    </md-slide-toggle>
+  </md-dialog-content>
+
+<div class="btn-group float-right" role="group" aria-label="Dialog action">
+  <!--If this dialog is for add a new playlist-->
+  <div *ngIf="new">
+    <button class="btn" md-raised-button color="accent" (click)="addPlaylist()">
+      <md-icon class="md-24">add</md-icon>
+    </button>
+  </div>
+
+  <!--If this dialog is for edit an existing playlist-->
+  <div *ngIf="!new">
+    <button class="btn" md-raised-button color="accent" (click)="editPlaylist()">
+      <md-icon class="md-24">done</md-icon>
+    </button>
+  </div>
+
+  <button class="btn" md-raised-button md-dialog-close>
+    <md-icon class="md-24">clear</md-icon>
+  </button>
+</div>
+
+</md-card-content>

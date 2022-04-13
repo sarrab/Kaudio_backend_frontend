@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <div class="container mt-3">
+    <h2>Registration</h2>
+
+    <div *ngIf="connected">
+      You are already registered and connected!
+    </div>
+
+    <form *ngIf="!connected" (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email"
+                ngControl="email"
+                required
+                autofocus
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                [(ngModel)]="user.email" name="email"
+                #email="ngModel">
+        <alert [hidden]="email.valid || email.pristine">
+          Email is required
+        </alert>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password"
+                required minlength="3"
+                [(ngModel)]="user.password" name="password"
+                #password="ngModel">
+        <alert
+          [hidden]="password.valid || password.pristine">
+          A password longer than 3 characters is required
+        </alert>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">Register</button>
+      <button class="btn btn-secondary" (click)="onLogout()">Cancel</button>
+    </form>
+  </div>
+</div>

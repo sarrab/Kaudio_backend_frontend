@@ -1,0 +1,20 @@
+nav {
+  font-size: 90%;
+}
+
+a {
+  color: #546E7A;
+  cursor: pointer;
+
+  &.title {
+    //font-weight: bold;
+  }
+
+  &.active {
+    cursor: default;
+  }
+
+  &:hover {
+    background: rgba(0,0,0,.05);
+  }
+}

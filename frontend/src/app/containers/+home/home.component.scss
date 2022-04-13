@@ -1,0 +1,17 @@
+.wrapper {
+  height: 100%;
+}
+
+.wrapper > .playlists-wrapper {
+  height: 100%;
+}
+.wrapper > .search {
+  height: 50%;
+}
+
+.wrapper > .audio-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}

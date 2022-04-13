@@ -1,0 +1,81 @@
+$border-radius:          0;
+$border-radius-lg:       0;
+$border-radius-sm:       0;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+// Datatable
+@import '~@swimlane/ngx-datatable/src/components/datatable.scss';
+@import '~@swimlane/ngx-datatable/src/themes/material.scss';
+
+// Material theme customization
+@import '~@angular/material/core/theming/all-theme';
+// Plus imports for other components in your app.
+
+// Include the base styles for Angular Material core. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+@include md-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$candy-app-primary: md-palette($md-grey);
+$candy-app-accent: md-palette($md-blue, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn: md-palette($md-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: md-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+
+
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  // background: #f6f6f6;
+}
+
+.wrapper {
+  // flex: 1;
+  padding-top: 54px;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  // background: #eaa; // Debug only
+  position: absolute;
+}
+
+// Plyr customization
+.plyr--audio .plyr__controls {
+  background: transparent;
+  color: #fbfbfb;
+  border: none;
+}
+
+// Datatables customization
+.datatable.material {
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,.05);
+}
+
+.datatable-body-cell-label {
+  font-size: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.datatable.material.single-selection .datatable-body-row.active .datatable-row-group {
+  background: $brand-primary;
+}

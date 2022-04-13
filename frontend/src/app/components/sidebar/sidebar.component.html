@@ -1,0 +1,13 @@
+<nav class="nav nav-pills flex-column mb-1">
+  <span class="nav-link disabled title">Playlists</span>
+  <div *ngIf="(login$ | async).connected">
+    <a
+      class="nav-link"
+      *ngFor="let playlist of playlistsList | async | keys; let i=index"
+      (click)="selectPlaylist(playlist.value._id)"
+      [class.active]="playlist.value._id === currentPlaylistId"
+    >
+    {{playlist.value.name}} <span class="badge" *ngIf="!playlist.value.public">private</span>
+    </a>
+  </div>
+</nav>

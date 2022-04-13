@@ -1,0 +1,22 @@
+<div class="playlists">
+  <div class="sidebar pb-3">
+    <app-livefeed></app-livefeed>
+
+    <hr>
+
+    <app-sidebar
+      [playlists]="playlistsEntitiesStore"
+      (selectPlaylist)="selectPlaylist($event)"
+    ></app-sidebar>
+
+    <button ype="button" class="btn btn-sm btn-secondary ml-2" (click)="addPlaylist()" style="margin-bottom: 50px">
+      <md-icon class="md-24">add</md-icon>
+    </button>
+  </div>
+
+  <div class="main">
+    <app-playlist
+      [playlist]="playlist$ | async"
+    ></app-playlist>
+  </div>
+</div>

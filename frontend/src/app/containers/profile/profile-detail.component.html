@@ -1,0 +1,53 @@
+<div class="wrapper">
+  <div class="container">
+    <table *ngIf="user" class="table">
+      <thead class="thead-default">
+        <th colspan="2" class="title">
+          {{user.email}} profile
+          <a *ngIf="viewedUserId == connectedUserId" class="btn btn-sm btn-primary float-right" routerLink="/profile">edit my profile</a>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Name</th><td>{{user.name || "-"}}</td>
+        </tr>
+        <tr>
+          <th>Age</th><td>{{user.age || "-"}}</td>
+        </tr>
+        <tr>
+          <th>Country</th><td>{{user.country || "-"}}</td>
+        </tr>
+        <tr>
+          <th>City</th><td>{{user.city || "-"}}</td>
+        </tr>
+        <tr>
+          <th>Picture</th><td>
+            <a href="http://www.gravatar.com/avatar/{{gravatar}}"><img height="100" src="http://www.gravatar.com/avatar/{{gravatar}}" alt="User picture" /></a>
+          </td>
+        </tr>
+        <tr>
+          <th>Member since</th><td>{{createdAt || "-"}}</td>
+        </tr>
+        <tr>
+          <th>Friends</th>
+          <td>
+            <span *ngFor="let friend of user.friends">
+                <a routerLink="/profile/{{friend._id}}">{{friend.email}}</a><br />
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Status</th><td>{{user.status || "-"}}</td>
+        </tr>
+        <tr>
+          <th>Playlists</th>
+          <td>
+            <span *ngFor="let playlist of playlists">
+                {{playlist.name}}<br />
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

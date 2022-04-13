@@ -1,0 +1,23 @@
+.playlists {
+  display: flex;
+  flex-flow: row wrap;
+  clear: both;
+  content: '';
+  height: 100%;
+  align-items: stretch;
+}
+
+.sidebar {
+  flex: 1;
+  max-width: 240px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  background: #f8f8f8;
+  overflow-y: auto;
+  padding-bottom: 70px;
+}
